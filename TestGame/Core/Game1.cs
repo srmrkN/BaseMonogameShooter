@@ -51,7 +51,7 @@ public class Game1 : Game
         _player.Update(gameTime, _inputHandler);
         _weapon.Update(gameTime, _player.Position, _inputHandler);
         _bulletManager.Update(gameTime, _player.Position, _weapon, _inputHandler);
-        _enemyManager.Update(gameTime, _player.Position, _bulletManager.Bullets);
+        _enemyManager.Update(gameTime, _player.Center, _bulletManager.Bullets);
 
         _player.ClampToScreen(_graphics.GraphicsDevice.Viewport);
 
