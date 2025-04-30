@@ -18,6 +18,8 @@ public static class GameConstants
     public const float EnemyRadius = 12f;
     public const float EnemySpeed = 200f;
     public const float EnemySpawnInterval = 0.5f;
+    public const int ScorePerEnemy = 10;
+    public const int ScorePenaltyPerCollision = 30;
 
     // Texture constants
     public static readonly Vector2 PlayerTextureSize = new(50, 50);
