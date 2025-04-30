@@ -9,11 +9,28 @@ namespace TestGame.Entities;
 public class Player : GameEntity
 {
     private float _speed;
+    public int Score { get; private set; }
 
     public Player()
     {
         Position = new Vector2(100, 100);
         _speed = GameConstants.PlayerDefaultSpeed;
+        Score = 0;
+    }
+
+    public void AddScore(int score)
+    {
+        Score += score;
+    }
+
+    public void RemoveScore(int score)
+    {
+        Score -= score;
+    }
+
+    public void TakeDamage()
+    {
+        
     }
 
     public Vector2 Center => Position + GameConstants.PlayerTextureSize / 2;

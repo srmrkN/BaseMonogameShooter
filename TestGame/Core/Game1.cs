@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using TestGame.Entities;
 using TestGame.Managers;
 
@@ -10,10 +11,12 @@ public class Game1 : Game
     private readonly GraphicsDeviceManager _graphics;
     private BulletManager _bulletManager;
     private EnemyManager _enemyManager;
+    private UIManager _uiManager;
     private InputHandler _inputHandler;
     private Player _player;
     private SpriteBatch _spriteBatch;
     private Weapon _weapon;
+    private Color _screenColor = Color.CornflowerBlue;
 
     public Game1()
     {
@@ -29,6 +32,7 @@ public class Game1 : Game
         _bulletManager = new BulletManager();
         _enemyManager = new EnemyManager(_graphics.GraphicsDevice.Viewport);
         _inputHandler = new InputHandler(_graphics.GraphicsDevice.Viewport);
+        _uiManager = new UIManager(_player);
         base.Initialize();
     }
 
@@ -39,6 +43,7 @@ public class Game1 : Game
         _weapon.LoadContent(GraphicsDevice);
         _bulletManager.LoadContent(GraphicsDevice);
         _enemyManager.LoadContent(GraphicsDevice);
+        _uiManager.LoadContent(Content);
     }
 
 
@@ -51,7 +56,8 @@ public class Game1 : Game
         _player.Update(gameTime, _inputHandler);
         _weapon.Update(gameTime, _player.Position, _inputHandler);
         _bulletManager.Update(gameTime, _player.Position, _weapon, _inputHandler);
-        _enemyManager.Update(gameTime, _player.Center, _bulletManager.Bullets);
+        _enemyManager.Update(gameTime, _player.Center, _bulletManager.Bullets, _player, _uiManager);
+        _uiManager.Update(gameTime);
 
         _player.ClampToScreen(_graphics.GraphicsDevice.Viewport);
 
@@ -60,13 +66,14 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(_screenColor);
 
         _spriteBatch.Begin();
         _player.Draw(_spriteBatch);
         _weapon.Draw(_spriteBatch);
         _bulletManager.Draw(_spriteBatch);
         _enemyManager.Draw(_spriteBatch);
+        _uiManager.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

@@ -38,7 +38,7 @@ public class EnemyManager
         _enemyTexture.SetData(data);
     }
 
-    public void Update(GameTime gameTime, Vector2 playerCenter, IReadOnlyList<Bullet> bullets)
+    public void Update(GameTime gameTime, Vector2 playerCenter, IReadOnlyList<Bullet> bullets, Player player, UIManager ui)
     {
         _timeSinceLastSpawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -66,12 +66,18 @@ public class EnemyManager
             if (enemy.IsActive)
             {
                 enemy.Update(gameTime, playerCenter);
-                if (enemy.CheckCollisionWithPlayer(playerCenter)) enemy.IsActive = false;
+                if (enemy.CheckCollisionWithPlayer(playerCenter))
+                {
+                    enemy.IsActive = false;
+                    player.RemoveScore(GameConstants.ScorePenaltyPerCollision);
+                    ui.NotifyScoreDecreased();
+                }
                 foreach (var bullet in bullets)
                     if (bullet.IsActive && enemy.CheckCollisionWithBullet(bullet))
                     {
                         enemy.IsActive = false;
                         bullet.IsActive = false;
+                        player.AddScore(GameConstants.ScorePerEnemy);
                         break;
                     }
             }
