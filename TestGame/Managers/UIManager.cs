@@ -12,7 +12,7 @@ public class UIManager
     private float _scoreFlashTimer;
     private SpriteFont _font;
     private Color _flashColor;
-    private readonly List<(string text, Vector2 position, float timer)> _floatingTexts = new();
+    private readonly List<(string text, Vector2 position, float timer, Color color)> _floatingTexts = new();
 
     public UIManager(Player player)
     {
@@ -25,14 +25,14 @@ public class UIManager
     {
         _scoreFlashTimer = 0.3f;
         _flashColor = Color.Green;
-        _floatingTexts.Add(($"+{change}", new Vector2(-10, -20) + _player.Position, 0.3f));
+        _floatingTexts.Add(($"+{change}", new Vector2(-10, -20) + _player.Position, 0.3f, Color.Green));
     }
 
     private void OnScoreDecreased(int change)
     {
         _scoreFlashTimer = 0.3f;
         _flashColor = Color.Red;
-        _floatingTexts.Add(($"{change}", new Vector2(-10, -20) + _player.Position, 0.3f));
+        _floatingTexts.Add(($"{change}", new Vector2(-10, -20) + _player.Position, 0.3f, Color.Red));
     }
 
     public void LoadContent(ContentManager content)
@@ -50,8 +50,8 @@ public class UIManager
         }
         for (int i = _floatingTexts.Count - 1; i >= 0; i--)
         {
-            var (text, pos, timer) = _floatingTexts[i];
-            _floatingTexts[i] = (text, pos + new Vector2(0, -50 * (float)gameTime.ElapsedGameTime.TotalSeconds), timer - (float)gameTime.ElapsedGameTime.TotalSeconds);
+            var (text, pos, timer, color) = _floatingTexts[i];
+            _floatingTexts[i] = (text, pos + new Vector2(0, -50 * (float)gameTime.ElapsedGameTime.TotalSeconds), timer - (float)gameTime.ElapsedGameTime.TotalSeconds, color);
             if (_floatingTexts[i].timer <= 0) _floatingTexts.RemoveAt(i);
         }
         
@@ -64,9 +64,9 @@ public class UIManager
         spriteBatch.DrawString(_font, $"Score: {_player.Score}", new Vector2(12, 12), Color.Black);
         spriteBatch.DrawString(_font, $"Score: {_player.Score}", new Vector2(10, 10), color);
 
-        foreach (var (text, pos, _) in _floatingTexts)
+        foreach (var (text, pos, _, textColor) in _floatingTexts)
         {
-            spriteBatch.DrawString(_font, text, pos, _flashColor * 0.8f);
+            spriteBatch.DrawString(_font, text, pos, textColor * 0.8f);
         }
     }
 }
