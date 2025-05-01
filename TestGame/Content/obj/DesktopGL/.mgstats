@@ -1,2 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/User/RiderProjects/TestGame/TestGame/Content/Font.spritefont","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2252,70681,1,4856559
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/Fonts/Font.spritefont","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/Fonts/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2252,70681,0,1476941
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/Fonts/MainMenuFont.spritefont","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/Fonts/MainMenuFont.xnb","FontDescriptionProcessor","SpriteFontContent",2252,21529,0,012949

@@ -26,4 +26,11 @@ public static class GameConstants
     public static readonly Vector2 WeaponTextureSize = new(20, 20);
     public static readonly Vector2 BulletTextureSize = new(5, 5);
     public static readonly Vector2 EnemyTextureSize = new(30, 30);
+    
+    // Main menu constants
+    public const int StartButtonWidth = 150;
+    public const int StartButtonHeight = 50;
+    public const int ExitButtonWidth = 150;
+    public const int ExitButtonHeight = 50;
+    public const int GapBetweenTwoButtons = 30;
 }

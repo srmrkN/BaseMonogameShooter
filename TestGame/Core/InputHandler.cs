@@ -43,4 +43,9 @@ public class InputHandler
     {
         return _currentMouseState.LeftButton == ButtonState.Pressed;
     }
+
+    public void ResetKeys()
+    {
+        _previousKeyboardState = _currentKeyboardState;
+    }
 }

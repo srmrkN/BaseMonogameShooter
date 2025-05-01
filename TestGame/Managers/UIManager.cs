@@ -37,7 +37,7 @@ public class UIManager
 
     public void LoadContent(ContentManager content)
     {
-        _font = content.Load<SpriteFont>("Font");
+        _font = content.Load<SpriteFont>("Fonts/Font");
     }
 
     public void Update(GameTime gameTime)
