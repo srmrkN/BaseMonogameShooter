@@ -60,7 +60,7 @@ public class UIManager
     public void Draw(SpriteBatch spriteBatch)
     {
         
-        Color color = Color.Lerp(Color.Yellow, _flashColor, _scoreFlashTimer / 0.2f);
+        Color color = Color.Lerp(Color.Yellow, _flashColor, _scoreFlashTimer / 0.3f);
         spriteBatch.DrawString(_font, $"Score: {_player.Score}", new Vector2(12, 12), Color.Black);
         spriteBatch.DrawString(_font, $"Score: {_player.Score}", new Vector2(10, 10), color);
 
