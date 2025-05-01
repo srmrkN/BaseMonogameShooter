@@ -70,7 +70,6 @@ public class EnemyManager
                 {
                     enemy.IsActive = false;
                     player.RemoveScore(GameConstants.ScorePenaltyPerCollision);
-                    ui.NotifyScoreDecreased();
                 }
                 foreach (var bullet in bullets)
                     if (bullet.IsActive && enemy.CheckCollisionWithBullet(bullet))
