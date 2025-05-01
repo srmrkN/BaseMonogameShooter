@@ -38,7 +38,7 @@ public class EnemyManager
         _enemyTexture.SetData(data);
     }
 
-    public void Update(GameTime gameTime, Vector2 playerCenter, IReadOnlyList<Bullet> bullets, Player player, UIManager ui)
+    public void Update(GameTime gameTime, Vector2 playerCenter, IReadOnlyList<Bullet> bullets, Player player)
     {
         _timeSinceLastSpawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
