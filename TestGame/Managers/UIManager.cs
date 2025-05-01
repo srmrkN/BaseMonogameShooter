@@ -17,16 +17,22 @@ public class UIManager
     public UIManager(Player player)
     {
         _player = player;
-        _player.OnScoreIncreased += OnScoreChanged;
-        _player.OnScoreDecreased += OnScoreChanged;
+        _player.OnScoreIncreased += OnScoreIncreased;
+        _player.OnScoreDecreased += OnScoreDecreased;
     }
 
-    private void OnScoreChanged(int change)
+    private void OnScoreIncreased(int change)
     {
         _scoreFlashTimer = 0.3f;
-        _player.OnScoreIncreased += _ => { _scoreFlashTimer = 0.3f; _flashColor = Color.Green; };
-        _player.OnScoreDecreased += _ => { _scoreFlashTimer = 0.3f; _flashColor = Color.Red; };
-        _floatingTexts.Add(($" {(change >= 0 ? "+" : "")}{change}", new Vector2(-10, -20) + _player.Position, 0.3f));
+        _flashColor = Color.Green;
+        _floatingTexts.Add(($"+{change}", new Vector2(-10, -20) + _player.Position, 0.3f));
+    }
+
+    private void OnScoreDecreased(int change)
+    {
+        _scoreFlashTimer = 0.3f;
+        _flashColor = Color.Red;
+        _floatingTexts.Add(($"{change}", new Vector2(-10, -20) + _player.Position, 0.3f));
     }
 
     public void LoadContent(ContentManager content)

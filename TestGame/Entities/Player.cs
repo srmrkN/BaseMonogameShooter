@@ -31,12 +31,7 @@ public class Player : GameEntity
         Score -= score;
         OnScoreDecreased?.Invoke(-score);
     }
-
-    public void TakeDamage()
-    {
-        
-    }
-
+    
     public Vector2 Center => Position + GameConstants.PlayerTextureSize / 2;
 
     public override void LoadContent(GraphicsDevice graphicsDevice)
