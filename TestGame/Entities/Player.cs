@@ -10,6 +10,8 @@ public class Player : GameEntity
 {
     private float _speed;
     public int Score { get; private set; }
+    public event Action<int> OnScoreIncreased;
+    public event Action<int> OnScoreDecreased;
 
     public Player()
     {
@@ -21,18 +23,15 @@ public class Player : GameEntity
     public void AddScore(int score)
     {
         Score += score;
+        OnScoreIncreased?.Invoke(score);
     }
 
     public void RemoveScore(int score)
     {
         Score -= score;
+        OnScoreDecreased?.Invoke(-score);
     }
-
-    public void TakeDamage()
-    {
-        
-    }
-
+    
     public Vector2 Center => Position + GameConstants.PlayerTextureSize / 2;
 
     public override void LoadContent(GraphicsDevice graphicsDevice)
