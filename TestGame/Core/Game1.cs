@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
 using TestGame.Entities;
 using TestGame.Managers;
 
@@ -15,11 +13,15 @@ public class Game1 : Game
     private EnemyManager _enemyManager;
     private UIManager _uiManager;
     private MenuManager _menuManager;
+    private SoundManager _soundManager;
     private InputHandler _inputHandler;
     private Player _player;
     private SpriteBatch _spriteBatch;
     private Weapon _weapon;
     private GameState _gameState;
+    private CollisionMonitor _collisionMonitor;
+    private CriticalErrorHandler _criticalErrorHandler;
+    private GameConfig _config;
 
     public Game1()
     {
@@ -30,14 +32,19 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _player = new Player();
-        _weapon = new Weapon();
-        _bulletManager = new BulletManager();
-        _enemyManager = new EnemyManager(_graphics.GraphicsDevice.Viewport);
+        _config = GameConfig.Load("config.json");
+        _player = new Player(_config);
+        _weapon = new Weapon(_config);
+        _bulletManager = new BulletManager(_config);
+        _enemyManager = new EnemyManager(_graphics.GraphicsDevice.Viewport, _config);
         _inputHandler = new InputHandler(_graphics.GraphicsDevice.Viewport);
         _uiManager = new UIManager(_player);
-        _menuManager = new MenuManager();
+        _menuManager = new MenuManager(_config);
+        _soundManager = new SoundManager();
         _gameState = GameState.Menu;
+        _collisionMonitor = new CollisionMonitor(_player, 2, _config);
+        _criticalErrorHandler = new CriticalErrorHandler(_collisionMonitor, _soundManager);
+        
         
         _menuManager.OnStartButtonClicked += () =>
         {
@@ -59,19 +66,25 @@ public class Game1 : Game
         _enemyManager.LoadContent(GraphicsDevice);
         _uiManager.LoadContent(Content);
         _menuManager.LoadContent(GraphicsDevice, Content);
+        _soundManager.LoadContent(Content);
     }
 
     private void ResetGame()
     {
-        _player = new Player();
-        _bulletManager = new BulletManager();
-        _enemyManager = new EnemyManager(_graphics.GraphicsDevice.Viewport);
+        _config = GameConfig.Load("config.json");
+        Console.WriteLine(_config.EnemyRadius);
+        _player = new Player(_config);
+        _bulletManager = new BulletManager(_config);
+        _enemyManager = new EnemyManager(_graphics.GraphicsDevice.Viewport, _config);
         _uiManager = new UIManager(_player);
         _player.LoadContent(GraphicsDevice);
         _bulletManager.LoadContent(GraphicsDevice);
         _enemyManager.LoadContent(GraphicsDevice);
         _uiManager.LoadContent(Content);
         _inputHandler.ResetKeys();
+        _soundManager.SubscribeToPlayer(_player);
+        _collisionMonitor = new CollisionMonitor(_player, 2, _config);
+        _criticalErrorHandler = new CriticalErrorHandler(_collisionMonitor, _soundManager);
     }
 
 
@@ -99,6 +112,7 @@ public class Game1 : Game
                 _bulletManager.Update(gameTime, _player.Position, _weapon, _inputHandler);
                 // Обновляем всех врагов
                 _enemyManager.Update(gameTime, _player.Center, _bulletManager.Bullets, _player);
+                _collisionMonitor.Update();
                 // Обновляем UI
                 _uiManager.Update(gameTime);
 
@@ -135,3 +149,4 @@ public class Game1 : Game
         base.Draw(gameTime);
     }
 }
+

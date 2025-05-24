@@ -27,3 +27,27 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MainMenuFont.spritefont
 
+#begin SoundEffects/UI/pop1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/UI/pop1.mp3
+
+#begin SoundEffects/UI/pop2.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/UI/pop2.mp3
+
+#begin SoundEffects/UI/pop3.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/UI/pop3.mp3
+
+#begin SoundEffects/UI/sus.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/UI/sus.mp3
+

@@ -12,7 +12,6 @@ public class MenuManager
 {
     private SpriteFont _buttonFont;
     private SpriteFont _titleFont;
-    private Vector2 _titlePosition;
     private Vector2 _startButtonPosition;
     private Vector2 _exitButtonPosition;
     private Vector2 _titleTextPosition;
@@ -24,6 +23,12 @@ public class MenuManager
     private Color _startButtonColor = Color.White;
     private Color _exitButtonColor = Color.White;
     private Texture2D _buttonTexture;
+    private GameConfig _config;
+
+    public MenuManager(GameConfig config)
+    {
+        _config = config;
+    }
     
     public event Action OnStartButtonClicked;
     public event Action OnExitButtonClicked;
@@ -33,18 +38,18 @@ public class MenuManager
         _buttonFont = content.Load<SpriteFont>("Fonts/MainMenuFont");
         _titleFont = content.Load<SpriteFont>("Fonts/Font");
         
-        _buttonTexture = new Texture2D(graphicsDevice, GameConstants.StartButtonWidth, GameConstants.StartButtonHeight);
-        Color[] data = new Color[GameConstants.StartButtonWidth * GameConstants.StartButtonHeight];
+        _buttonTexture = new Texture2D(graphicsDevice, _config.StartButtonWidth, _config.StartButtonHeight);
+        Color[] data = new Color[_config.StartButtonWidth * _config.StartButtonHeight];
         for (int i = 0; i < data.Length; i++) data[i] = Color.White;
         _buttonTexture.SetData(data);
         
             // ReSharper disable PossibleLossOfFraction
         _startButtonPosition = new Vector2(  // Посередине экрана, чуть ниже вертикального центра
-            x: graphicsDevice.Viewport.Width / 2 - GameConstants.StartButtonWidth / 2,
+            x: graphicsDevice.Viewport.Width / 2 - _config.StartButtonWidth / 2,
             y: graphicsDevice.Viewport.Height / 2);
         _exitButtonPosition = new Vector2( // Ниже кнопки старта
             x: _startButtonPosition.X,
-            y: _startButtonPosition.Y + GameConstants.StartButtonHeight + GameConstants.GapBetweenTwoButtons);
+            y: _startButtonPosition.Y + _config.StartButtonHeight + _config.GapBetweenTwoButtons);
         
         var titleTextSize = _titleFont.MeasureString("BaseMonogameShooter");
         var startTextSize = _buttonFont.MeasureString("Start");
@@ -55,14 +60,14 @@ public class MenuManager
             y: graphicsDevice.Viewport.Height / 4 - titleTextSize.Y / 2);
         
         _startButtonTextPosition = new Vector2(
-            x: _startButtonPosition.X + GameConstants.StartButtonWidth / 2 - startTextSize.X / 2,
-            y: _startButtonPosition.Y + GameConstants.StartButtonHeight / 2 - startTextSize.Y / 2);
+            x: _startButtonPosition.X + _config.StartButtonWidth / 2 - startTextSize.X / 2,
+            y: _startButtonPosition.Y + _config.StartButtonHeight / 2 - startTextSize.Y / 2);
         _exitButtonTextPosition = new Vector2(
-            x: _exitButtonPosition.X + GameConstants.ExitButtonWidth / 2 - exitTextSize.X / 2,
-            y: _exitButtonPosition.Y + GameConstants.ExitButtonHeight / 2 - exitTextSize.Y / 2);
+            x: _exitButtonPosition.X + _config.ExitButtonWidth / 2 - exitTextSize.X / 2,
+            y: _exitButtonPosition.Y + _config.ExitButtonHeight / 2 - exitTextSize.Y / 2);
         
-        _startButtonBounds = new Rectangle((int)_startButtonPosition.X, (int)_startButtonPosition.Y, GameConstants.StartButtonWidth, GameConstants.StartButtonHeight);
-        _exitButtonBounds = new Rectangle((int)_exitButtonPosition.X, (int)_exitButtonPosition.Y, GameConstants.ExitButtonWidth, GameConstants.ExitButtonHeight);
+        _startButtonBounds = new Rectangle((int)_startButtonPosition.X, (int)_startButtonPosition.Y, _config.StartButtonWidth, _config.StartButtonHeight);
+        _exitButtonBounds = new Rectangle((int)_exitButtonPosition.X, (int)_exitButtonPosition.Y, _config.ExitButtonWidth, _config.ExitButtonHeight);
     }
 
     public void Update(GameTime gameTime)
