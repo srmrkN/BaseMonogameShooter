@@ -1,2 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/User/RiderProjects/TestGame/TestGame/Content/Font.spritefont","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2252,70681,1,4856559
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/Fonts/Font.spritefont","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/Fonts/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2252,70681,0,1951298
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/Fonts/MainMenuFont.spritefont","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/Fonts/MainMenuFont.xnb","FontDescriptionProcessor","SpriteFontContent",2252,21529,0,0135109
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/SoundEffects/UI/pop1.mp3","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/SoundEffects/UI/pop1.xnb","SoundEffectProcessor","SoundEffectContent",3343,18537,0,7059992
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/SoundEffects/UI/pop2.mp3","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/SoundEffects/UI/pop2.xnb","SoundEffectProcessor","SoundEffectContent",7680,26885,0,2101362
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/SoundEffects/UI/pop3.mp3","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/SoundEffects/UI/pop3.xnb","SoundEffectProcessor","SoundEffectContent",10560,39381,0,2169713
+"C:/Users/User/RiderProjects/TestGame/TestGame/Content/SoundEffects/UI/sus.mp3","C:/Users/User/RiderProjects/TestGame/TestGame/Content/bin/DesktopGL/SoundEffects/UI/sus.xnb","SoundEffectProcessor","SoundEffectContent",160959,1774185,0,2615565

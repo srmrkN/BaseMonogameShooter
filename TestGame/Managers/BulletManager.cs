@@ -11,14 +11,20 @@ public class BulletManager
     private readonly List<Bullet> _bullets = new();
     private Texture2D _bulletTexture;
     private float _timeSinceLastShot;
+    private GameConfig _config;
+
+    public BulletManager(GameConfig config)
+    {
+        _config = config;
+    }
 
     public IReadOnlyList<Bullet> Bullets => _bullets.AsReadOnly();
 
     public void LoadContent(GraphicsDevice graphicsDevice)
     {
-        _bulletTexture = new Texture2D(graphicsDevice, (int)GameConstants.BulletTextureSize.X,
-            (int)GameConstants.BulletTextureSize.Y);
-        var data = new Color[(int)(GameConstants.BulletTextureSize.X * GameConstants.BulletTextureSize.Y)];
+        _bulletTexture = new Texture2D(graphicsDevice, (int)_config.BulletTextureSize.X,
+            (int)_config.BulletTextureSize.Y);
+        var data = new Color[(int)(_config.BulletTextureSize.X * _config.BulletTextureSize.Y)];
         for (var i = 0; i < data.Length; i++) data[i] = new Color(0.4f, 0.3f, 0.5f, 1f);
         _bulletTexture.SetData(data);
     }
@@ -27,13 +33,13 @@ public class BulletManager
     {
         _timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (input.IsLeftMouseButtonPressed() && _timeSinceLastShot >= GameConstants.BulletCooldown)
+        if (input.IsLeftMouseButtonPressed() && _timeSinceLastShot >= _config.BulletCooldown)
         {
             var bulletDirection = Vector2.Normalize(input.MousePosition - weapon.Position);
 
-            if (Vector2.Distance(input.MousePosition, playerCenter) < GameConstants.PlayerTextureSize.X / 2)
+            if (Vector2.Distance(input.MousePosition, playerCenter) < _config.PlayerTextureSize.X / 2)
                 bulletDirection *= -1;
-            var bullet = new Bullet(weapon.Position + bulletDirection * 10f, bulletDirection)
+            var bullet = new Bullet(weapon.Position + bulletDirection * 10f, bulletDirection, _config)
             {
                 Texture = _bulletTexture
             };

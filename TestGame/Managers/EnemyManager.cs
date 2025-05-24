@@ -14,25 +14,27 @@ public class EnemyManager
     private Texture2D _enemyTexture;
     private float _timeSinceLastSpawn;
     private Viewport _viewport;
+    private GameConfig _config;
 
 
-    public EnemyManager(Viewport viewport)
+    public EnemyManager(Viewport viewport, GameConfig config)
     {
+        _config = config;
         _viewport = viewport;
     }
 
     public void LoadContent(GraphicsDevice graphicsDevice)
     {
-        _enemyTexture = new Texture2D(graphicsDevice, (int)GameConstants.EnemyTextureSize.X,
-            (int)GameConstants.EnemyTextureSize.Y);
-        var data = new Color[(int)(GameConstants.EnemyTextureSize.X * GameConstants.EnemyTextureSize.Y)];
-        var center = GameConstants.EnemyTextureSize.X / 2;
-        for (var y = 0; y < GameConstants.EnemyTextureSize.Y; y++)
-        for (var x = 0; x < GameConstants.EnemyTextureSize.X; x++)
+        _enemyTexture = new Texture2D(graphicsDevice, (int)_config.EnemyTextureSize.X,
+            (int)_config.EnemyTextureSize.Y);
+        var data = new Color[(int)(_config.EnemyTextureSize.X * _config.EnemyTextureSize.Y)];
+        var center = _config.EnemyTextureSize.X / 2;
+        for (var y = 0; y < _config.EnemyTextureSize.Y; y++)
+        for (var x = 0; x < _config.EnemyTextureSize.X; x++)
         {
             var distance = (float)Math.Sqrt(Math.Pow(x - center, 2) + Math.Pow(y - center, 2));
-            data[y * (int)GameConstants.EnemyTextureSize.X + x] =
-                distance <= GameConstants.EnemyRadius ? Color.Green : Color.Transparent;
+            data[y * (int)_config.EnemyTextureSize.X + x] =
+                distance <= _config.EnemyRadius ? Color.Green : Color.Transparent;
         }
 
         _enemyTexture.SetData(data);
@@ -43,20 +45,20 @@ public class EnemyManager
         _timeSinceLastSpawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         // Спавн врагов
-        if (_timeSinceLastSpawn >= GameConstants.EnemySpawnInterval)
+        if (_timeSinceLastSpawn >= _config.EnemySpawnInterval)
         {
             Vector2 spawnPosition;
             var edge = _random.Next(4);
             if (edge == 0) // Верх
-                spawnPosition = new Vector2(_random.Next(0, _viewport.Width), -GameConstants.EnemyTextureSize.Y);
+                spawnPosition = new Vector2(_random.Next(0, _viewport.Width), -_config.EnemyTextureSize.Y);
             else if (edge == 1) // Низ
                 spawnPosition = new Vector2(_random.Next(0, _viewport.Width), _viewport.Height);
             else if (edge == 2) // Лево
-                spawnPosition = new Vector2(-GameConstants.EnemyTextureSize.X, _random.Next(0, _viewport.Height));
+                spawnPosition = new Vector2(-_config.EnemyTextureSize.X, _random.Next(0, _viewport.Height));
             else // Право
                 spawnPosition = new Vector2(_viewport.Width, _random.Next(0, _viewport.Height));
 
-            var enemy = new Enemy(spawnPosition) { Texture = _enemyTexture };
+            var enemy = new Enemy(spawnPosition, _config) { Texture = _enemyTexture };
             _enemies.Add(enemy);
             _timeSinceLastSpawn = 0f;
         }
@@ -69,14 +71,14 @@ public class EnemyManager
                 if (enemy.CheckCollisionWithPlayer(playerCenter))
                 {
                     enemy.IsActive = false;
-                    player.RemoveScore(GameConstants.ScorePenaltyPerCollision);
+                    player.RemoveScore(_config.ScorePenaltyPerCollision);
                 }
                 foreach (var bullet in bullets)
                     if (bullet.IsActive && enemy.CheckCollisionWithBullet(bullet))
                     {
                         enemy.IsActive = false;
                         bullet.IsActive = false;
-                        player.AddScore(GameConstants.ScorePerEnemy);
+                        player.AddScore(_config.ScorePerEnemy);
                         break;
                     }
             }
